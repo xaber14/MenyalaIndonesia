@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Menyala Indonesia | Kompas.com</title>
+<meta name="description" content="Menyala Indonesia - Semangat perjuangan yang tak pernah padam, membangun Indonesia yang merdeka, bersatu dan berdaulat." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libertinus+Serif:wght@400;700&family=Playfair+Display:ital,wght@1,700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=8" />
+</head>
+<body>
+
+<!-- Icon sprite (placeholder icons - generic shapes, not exact Figma assets) -->
+<svg class="icon-sprite" aria-hidden="true" style="display:none">
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-bag" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.1" y2="4.9"/></g></symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9.8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 19a7.5 7.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="icon-menu" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g></symbol>
+  <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="M9 6l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0"/><path d="M9.5 8.2v7.6a.6.6 0 0 0 .92.5l6-3.8a.6.6 0 0 0 0-1l-6-3.8a.6.6 0 0 0-.92.5z" fill="currentColor"/></symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 6.5l8 6.5 8-6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M14 8.5h2V6h-2c-1.7 0-3 1.3-3 3v1.5H9V13h2v7h2.2v-7h2l.4-2.5h-2.4V9c0-.3.3-.5.4-.5z" fill="currentColor"/></symbol>
+  <symbol id="icon-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.6" cy="7.4" r="0.9" fill="currentColor"/></symbol>
+  <symbol id="icon-line" viewBox="0 0 24 24"><path d="M12 4.5c-4.4 0-8 3-8 6.7 0 3.3 2.9 6.1 6.8 6.6.3 0 .5.2.4.5-.1.5-.4 1.6-.4 1.9 0 .3.2.4.4.3.5-.2 3-1.8 4.1-3.1 2.1-1.2 3.7-3.3 3.7-6.1 0-3.7-3.6-6.7-8-6.7z" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="icon-pinterest" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 17.5l1.6-7.2M9.6 12.2c0-1.7 1.5-3.2 3.4-3.2 2 0 3.2 1.3 3.2 3 0 2.2-1.1 4-2.9 4-.8 0-1.5-.5-1.7-1.1" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="icon-apple" viewBox="0 0 24 24"><path d="M16.4 12.3c0-1.8 1-2.7 1-2.7s-.9-1.3-2.2-1.3c-1 0-1.5.6-2.3.6-.8 0-1.4-.6-2.3-.6-1.2 0-2.6.9-3.2 2.4-1.1 2.6-.3 6.6 1.6 8.9.7.8 1.4 1.6 2.4 1.6.9 0 1.3-.6 2.3-.6s1.3.6 2.3.6c1 0 1.7-.9 2.3-1.7.5-.7.9-1.4 1.2-2.2-1.5-.6-2.1-2-2.1-3.3v-1.7zM13.9 7c.5-.6.9-1.5.8-2.4-.8.1-1.7.6-2.2 1.2-.5.6-.9 1.5-.8 2.3.9 0 1.7-.5 2.2-1.1z" fill="currentColor"/></symbol>
+  <symbol id="icon-play-store" viewBox="0 0 24 24"><path d="M5 4.5v15l8-7.5-8-7.5z" fill="currentColor"/><path d="M5 4.5l11 6-3 2.8M5 19.5l11-6-3-2.8" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-cert" viewBox="0 0 24 24"><circle cx="12" cy="9.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 14.7L7 21l5-2.5 5 2.5-1.5-6.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar">
+  <div class="navbar__utility">
+    <div class="container navbar__utility-inner">
+      <a href="#" class="navbar__logo" aria-label="Kompas.com">
+        <img src="assets/img/logo-kompas.png" width="183" height="36" alt="Kompas.com - Jernih Melihat Dunia" />
+      </a>
+
+      <form class="navbar__search" role="search">
+        <label class="visually-hidden" for="searchInput">Cari</label>
+        <input id="searchInput" type="text" placeholder="Cari tokoh, topik atau peristiwa" />
+        <button type="submit" aria-label="Cari">
+          <svg width="24" height="24"><use href="#icon-search"/></svg>
+        </button>
+      </form>
+
+      <div class="navbar__actions">
+        <button class="btn btn--subscribe">Langganan Kompas.id</button>
+        <button class="icon-btn" aria-label="Belanja">
+          <img src="assets/icons/handbag.png" width="22" height="24" alt="" />
+        </button>
+        <button class="icon-btn" aria-label="Mode tampilan">
+          <img src="assets/icons/sun.png" width="26" height="26" alt="" />
+        </button>
+        <button class="icon-btn icon-btn--font" aria-label="Ukuran huruf">
+          <img src="assets/icons/font-size.png" width="24" height="24" alt="" />
+          <span class="badge-new">Baru</span>
+        </button>
+        <button class="icon-btn" aria-label="Akun saya">
+          <img src="assets/icons/user-circle.png" width="24" height="24" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar__menu" aria-label="Menu utama">
+    <div class="container navbar__menu-inner">
+      <ul class="navbar__menu-list">
+        <li><a href="#">News</a></li>
+        <li><a href="#">Nusaraya</a></li>
+        <li><a href="#">Jernih 360</a></li>
+        <li><a href="#">Cahaya</a></li>
+        <li><a href="#">Tekno</a></li>
+        <li><a href="#">Otomotif</a></li>
+        <li><a href="#">Bola</a></li>
+        <li><a href="#">Lifestyle</a></li>
+        <li><a href="#">Tren</a></li>
+        <li><a href="#">Lestari</a></li>
+        <li><a href="#">Health</a></li>
+        <li><a href="#">Money</a></li>
+        <li><a href="#">Properti</a></li>
+        <li><a href="#">Edukasi</a></li>
+        <li><a href="#">Travel</a></li>
+      </ul>
+      <button class="icon-btn icon-btn--sm" aria-label="Menu lainnya">
+        <svg width="18" height="18"><use href="#icon-menu"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <!-- Decorative artwork: anchored to the viewport edges, scales with width -->
+    <img class="hero__asset hero__asset--left" src="assets/img/hero-asset-left.png" alt="" aria-hidden="true" />
+    <img class="hero__asset hero__asset--right" src="assets/img/hero-asset-right.png" alt="" aria-hidden="true" />
+    <!-- Soft white ellipse that lifts the bottom edge of the hero -->
+    <div class="hero__fade" aria-hidden="true"></div>
+
+    <div class="container hero__inner">
+      <!-- Ad slot sits at the TOP of the hero -->
+      <div class="ad-slot ad-slot--leaderboard">
+        <img class="ad-slot__image" src="assets/img/ads/hero-leaderboard.jpg" alt="Iklan: Optik Seis, diskon hingga 30%" loading="lazy" />
+        <p class="ad-slot__caption">Dapatkan pengalaman membaca tanpa iklan. <a href="#">Gabung KOMPAS.com+</a></p>
+      </div>
+
+      <div class="hero__text">
+        <h1 class="hero__title">Menyala Indonesia</h1>
+        <p class="hero__subtitle">Setiap kebaikan punya cerita tersendiri, setiap cerita bisa menginspirasi untuk membangun Indonesia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROLLS (carousel) ============ -->
+  <section class="rolls">
+    <div class="container rolls__container">
+      <div class="rolls__track" id="rollsTrack">
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-1.jpg" alt="Sepeda diparkir di jembatan kanal Amsterdam" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Serunya Bersepeda Menyusuri Kanal-Kanal Amsterdam</p>
+        </article>
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-2.jpg" alt="Kamar hotel dengan pemandangan kota" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Diskon 75% Hotel Berpemandangan Kota, Buruan Cek!</p>
+        </article>
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-3.jpg" alt="Deretan rumah klasik di tepi kanal Belanda" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Rumah Klasik di Tepi Kanal, Ikon Wisata Belanda</p>
+        </article>
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-4.jpg" alt="Gereja tua bersejarah di Belanda" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Gereja Tua Bersejarah, Landmark Wajib Dikunjungi</p>
+        </article>
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-5.jpg" alt="Kincir angin Kinderdijk di tepi air" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Kincir Angin Kinderdijk, Situs Warisan Dunia UNESCO</p>
+        </article>
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-6.jpg" alt="Sepeda terparkir di depan rumah kanal Amsterdam saat senja" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Jalan-Jalan di Amsterdam, Kota Sejuta Sepeda</p>
+        </article>
+        <article class="roll-card">
+          <img class="roll-card__thumb" src="assets/img/rolls/roll-7.jpg" alt="Ladang tulip berwarna-warni di Belanda" loading="lazy" />
+          <div class="roll-card__overlay"></div>
+          <p class="roll-card__title">Musim Semi di Belanda, Ladang Tulip Berwarna-Warni</p>
+        </article>
+      </div>
+      <button class="carousel-nav carousel-nav--prev" data-target="rollsTrack" aria-label="Sebelumnya">
+        <svg width="16" height="16"><use href="#icon-chevron-right"/></svg>
+      </button>
+      <button class="carousel-nav carousel-nav--next" data-target="rollsTrack" aria-label="Selanjutnya">
+        <svg width="16" height="16"><use href="#icon-chevron-right"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ ARTICLE HIGHLIGHT ============ -->
+  <section class="article-highlight">
+    <div class="container">
+      <a class="headline-card" href="#">
+        <img class="headline-card__image" src="assets/img/article/headline-self-reward.jpg" alt="Wanita membawa belanjaan di mal" loading="lazy" />
+        <div class="headline-card__body">
+          <h2 class="headline-card__title">Self-Reward atau Pelarian? Menakar Hasrat Belanja Konsumen Saat Dompet Menipis</h2>
+          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+        </div>
+      </a>
+
+      <div class="article-grid">
+        <a class="article-card" href="#">
+          <img class="article-card__thumb" src="assets/img/article/grid-bagaimana-industri.jpg" alt="Interior toko OH! SOME" loading="lazy" />
+          <h3 class="article-card__title">Bagaimana Industri Kesenangan Instan Menjinakkan Kecemasan Krisis</h3>
+          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+        </a>
+        <a class="article-card" href="#">
+          <img class="article-card__thumb" src="assets/img/article/grid-ilusi-kemewahan.jpg" alt="Kerumunan orang berjalan di trotoar kota" loading="lazy" />
+          <h3 class="article-card__title">Ilusi Kemewahan: Cara Kelas Menengah Merawat Waras di Tengah Ketidakpastian Finansial</h3>
+          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+        </a>
+        <a class="article-card" href="#">
+          <img class="article-card__thumb" src="assets/img/article/grid-self-reward-2.jpg" alt="Wanita berbelanja pakaian membawa tas belanja" loading="lazy" />
+          <h3 class="article-card__title">Self-Reward atau Pelarian? Menakar Hasrat Belanja Konsumen Saat Dompet Menipis</h3>
+          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+        </a>
+        <a class="article-card" href="#">
+          <img class="article-card__thumb" src="assets/img/article/grid-ekonomi-sedang-lesu.jpg" alt="Bangunan Toko Kopi Tuku" loading="lazy" />
+          <h3 class="article-card__title">Ekonomi Sedang Lesu, Tapi Mengapa Toko Kosmetik dan Kedai Kopi Premium Tetap Antre?</h3>
+          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VIDEO + RIGHT ADS ============ -->
+  <section class="video-ads">
+    <div class="container video-ads__inner">
+
+      <div class="video-ads__main">
+        <div class="section-heading">
+          <h2>Video</h2>
+          <svg width="24" height="24"><use href="#icon-chevron-right"/></svg>
+        </div>
+
+        <a class="video-featured" href="#">
+          <div class="video-featured__thumb">
+            <img src="assets/img/video/featured-mengapa.jpg" alt="Wanita membawa belanjaan di mal" loading="lazy" />
+            <span class="duration-badge"><svg width="16" height="16"><use href="#icon-play"/></svg>05:25</span>
+          </div>
+          <div class="video-featured__body">
+            <h3 class="video-featured__title">Mengapa Kita Butuh 'Terlihat Makmur' Justru Saat Situasi Finansial Sedang Menjepit?</h3>
+            <p class="meta meta--tertiary">7 Januari 2026</p>
+          </div>
+        </a>
+
+        <div class="video-grid-wrap">
+          <div class="video-grid" id="videoTrack">
+            <a class="video-card" href="#">
+              <div class="video-card__thumb">
+                <img src="assets/img/video/grid-ironi-konsumerisme.jpg" alt="Tiga wanita berbelanja bersama" loading="lazy" />
+                <span class="duration-badge"><svg width="16" height="16"><use href="#icon-play"/></svg>05:25</span>
+              </div>
+              <h4 class="video-card__title">Ironi Konsumerisme Modern: Lapangan Kerja Menyusut, Gaya Hidup Menolak Kompromi</h4>
+              <p class="meta"><span>Video</span><span class="dot"></span><span>12 Februari 2026</span></p>
+            </a>
+            <a class="video-card" href="#">
+              <div class="video-card__thumb">
+                <img src="assets/img/video/grid-angka-inflasi.jpg" alt="Perawatan skincare dengan serum" loading="lazy" />
+                <span class="duration-badge"><svg width="16" height="16"><use href="#icon-play"/></svg>05:25</span>
+              </div>
+              <h4 class="video-card__title">Di Balik Angka Inflasi: Belanja Skincare Sebagai Katup Penyelamat Ekonomi Rumah Tangga</h4>
+              <p class="meta"><span>Video</span><span class="dot"></span><span>12 Februari 2026</span></p>
+            </a>
+            <a class="video-card" href="#">
+              <div class="video-card__thumb">
+                <img src="assets/img/video/grid-ketahanan-emosional.jpg" alt="Teman-teman mengobrol di ruang terbuka hijau" loading="lazy" />
+                <span class="duration-badge"><svg width="16" height="16"><use href="#icon-play"/></svg>05:25</span>
+              </div>
+              <h4 class="video-card__title">Catatan tentang Ketahanan Emosional Konsumen Modern</h4>
+              <p class="meta"><span>Video</span><span class="dot"></span><span>12 Februari 2026</span></p>
+            </a>
+            <a class="video-card" href="#">
+              <div class="video-card__thumb">
+                <img src="assets/img/video/grid-memanjakan-diri.jpg" alt="Perawatan pijat spa" loading="lazy" />
+                <span class="duration-badge"><svg width="16" height="16"><use href="#icon-play"/></svg>05:25</span>
+              </div>
+              <h4 class="video-card__title">Seni Memanjakan Diri Tanpa Harus Bangkrut di Tengah Badai Resesi</h4>
+              <p class="meta"><span>Video</span><span class="dot"></span><span>12 Februari 2026</span></p>
+            </a>
+          </div>
+          <button class="carousel-nav carousel-nav--prev" data-target="videoTrack" aria-label="Sebelumnya">
+            <svg width="16" height="16"><use href="#icon-chevron-right"/></svg>
+          </button>
+          <button class="carousel-nav carousel-nav--next" data-target="videoTrack" aria-label="Selanjutnya">
+            <svg width="16" height="16"><use href="#icon-chevron-right"/></svg>
+          </button>
+        </div>
+
+        <!-- Terkini Lainnya lives in the LEFT column, stacked below Video —
+             the right ads column is taller and runs alongside both. -->
+        <div class="terkini">
+          <div class="terkini__separator"></div>
+          <h2 class="terkini__heading">Terkini Lainnya</h2>
+          <div class="terkini__list">
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-1-pejabat-muda.jpg" alt="Pejabat muda bekerja di depan komputer" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Selain Gibran, Ini 21 Kepala Daerah Berusia di Bawah 40 Tahun yang Bisa Jadi Capres</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-2-acara-kursi.jpg" alt="Deretan kursi kosong di sebuah acara" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Syukuran Putusan MK, Relawan Gibran Salatiga Berangkat ke Semarang</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-3-kebakaran-hutan.jpg" alt="Kebakaran hutan berasap" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">27 Hektar Lahan di Hutan Lindung Egon Ilinmedo Sikka Terbakar</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-4-rice-cooker.jpg" alt="Rice cooker di atas meja dapur" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Pemprov Banten Data Warga Calon Penerima "Rice Cooker" Gratis</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-5-gajah.jpg" alt="Gajah di tepi air saat senja" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Anak Gajah Terjebak di Sumur Jambi, Evakuasi Ditunggu Kawanannya</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-1-pejabat-muda.jpg" alt="Pejabat muda bekerja di depan komputer" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Selain Gibran, Ini 21 Kepala Daerah Berusia di Bawah 40 Tahun yang Bisa Jadi Capres</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-2-acara-kursi.jpg" alt="Deretan kursi kosong di sebuah acara" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Syukuran Putusan MK, Relawan Gibran Salatiga Berangkat ke Semarang</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-3-kebakaran-hutan.jpg" alt="Kebakaran hutan berasap" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">27 Hektar Lahan di Hutan Lindung Egon Ilinmedo Sikka Terbakar</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-4-rice-cooker.jpg" alt="Rice cooker di atas meja dapur" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Pemprov Banten Data Warga Calon Penerima "Rice Cooker" Gratis</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+        <a class="terkini-item" href="#">
+          <img class="terkini-item__thumb" src="assets/img/terkini/terkini-5-gajah.jpg" alt="Gajah di tepi air saat senja" loading="lazy" />
+          <div class="terkini-item__body">
+            <h3 class="terkini-item__title">Anak Gajah Terjebak di Sumur Jambi, Evakuasi Ditunggu Kawanannya</h3>
+            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+          </div>
+        </a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="video-ads__sidebar">
+        <div class="ad-slot ad-slot--300x250">
+          <div class="ad-slot__image placeholder-block"></div>
+          <p class="ad-slot__caption">Baca tanpa iklan. <a href="#">Gabung KOMPAS.com+</a></p>
+        </div>
+        <div class="ad-slot ad-slot--300x600">
+          <div class="ad-slot__image placeholder-block ad-slot__image--tall"></div>
+          <p class="ad-slot__caption">Baca tanpa iklan. <a href="#">Gabung KOMPAS.com+</a></p>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer__top">
+
+    <div class="footer__brand">
+      <a href="#" class="footer__logo" aria-label="Kompas.com">
+        KOMPAS<span>.com</span>
+      </a>
+
+      <div class="footer__social">
+        <a href="#" aria-label="Facebook"><svg width="16" height="16"><use href="#icon-facebook"/></svg></a>
+        <a href="#" aria-label="X (Twitter)"><svg width="16" height="16"><use href="#icon-x"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="20" height="20"><use href="#icon-instagram"/></svg></a>
+        <a href="#" aria-label="Line"><svg width="16" height="16"><use href="#icon-line"/></svg></a>
+        <a href="#" aria-label="Pinterest"><svg width="20" height="20"><use href="#icon-pinterest"/></svg></a>
+      </div>
+
+      <div class="footer__apps">
+        <a href="#" class="footer__app-badge">
+          <svg width="18" height="18"><use href="#icon-apple"/></svg>
+          <span><small>Download di</small>App Store</span>
+        </a>
+        <a href="#" class="footer__app-badge">
+          <svg width="18" height="18"><use href="#icon-play-store"/></svg>
+          <span><small>Temukan di</small>Google Play</span>
+        </a>
+      </div>
+
+      <div class="footer__certs">
+        <p>Penghargaan dan sertifikat:</p>
+        <div class="footer__cert-badges">
+          <span class="cert-badge"><svg width="20" height="20"><use href="#icon-cert"/></svg></span>
+          <span class="cert-badge"><svg width="20" height="20"><use href="#icon-cert"/></svg></span>
+          <span class="cert-badge"><svg width="20" height="20"><use href="#icon-cert"/></svg></span>
+        </div>
+      </div>
+
+      <div class="footer__newsletter">
+        <p>Dapatkan informasi dan insight pilihan redaksi Kompas.com</p>
+        <button class="btn btn--newsletter">
+          <svg width="20" height="20"><use href="#icon-mail"/></svg>
+          Daftarkan Email
+        </button>
+      </div>
+    </div>
+
+    <div class="footer__links">
+      <div class="footer__col footer__col--kanal">
+        <h3>Kanal</h3>
+        <div class="footer__kanal-grid">
+          <ul>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Nasional</a></li>
+            <li><a href="#">Global</a></li>
+            <li><a href="#">Megapolitan</a></li>
+            <li><a href="#">Regional</a></li>
+            <li><a href="#">Bola</a></li>
+            <li><a href="#">Tekno</a></li>
+            <li><a href="#">Otomotif</a></li>
+            <li><a href="#">Entertainment</a></li>
+            <li><a href="#">Sains</a></li>
+            <li><a href="#">Health</a></li>
+            <li><a href="#">Money</a></li>
+          </ul>
+          <ul>
+            <li><a href="#">Tren</a></li>
+            <li><a href="#">Properti</a></li>
+            <li><a href="#">Lifestyle</a></li>
+            <li><a href="#">Hype</a></li>
+            <li><a href="#">Travel</a></li>
+            <li><a href="#">Homey</a></li>
+            <li><a href="#">Food</a></li>
+            <li><a href="#">UMKM</a></li>
+            <li><a href="#">Edukasi</a></li>
+            <li><a href="#">Parapuan</a></li>
+            <li><a href="#">Foto</a></li>
+            <li><a href="#">Video</a></li>
+          </ul>
+          <ul>
+            <li><a href="#">Kolom</a></li>
+            <li><a href="#">VIK</a></li>
+            <li><a href="#">JEO</a></li>
+            <li><a href="#">Lestari</a></li>
+            <li><a href="#">Ohayo Jepang</a></li>
+            <li><a href="#">Pesona Indonesia</a></li>
+            <li><a href="#">Play</a></li>
+            <li><a href="#">Artikel Terpopuler</a></li>
+            <li><a href="#">Artikel Terkini</a></li>
+            <li><a href="#">Topik Pilihan</a></li>
+            <li><a href="#">Artikel Headline</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__col footer__col--network">
+        <h3>Network</h3>
+        <ul>
+          <li><a href="#">Harian KOMPAS</a></li>
+          <li><a href="#">KompasTV</a></li>
+          <li><a href="#">Sonora.id</a></li>
+          <li><a href="#">Kompasiana.com</a></li>
+          <li><a href="#">Pasangiklan.com</a></li>
+          <li><a href="#">Gramedia.com</a></li>
+          <li><a href="#">Gramedia Digital</a></li>
+          <li><a href="#">Gridoto.com</a></li>
+          <li><a href="#">Bolasport.com</a></li>
+          <li><a href="#">Grid.id</a></li>
+          <li><a href="#">Kontan.co.id</a></li>
+          <li><a href="#">KGMedia.id</a></li>
+          <li><a href="#">KGNow.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <ul class="footer__legal-links">
+      <li><a href="#">Kebijakan Data Pribadi</a></li>
+      <li><a href="#">Pedoman Media Siber</a></li>
+      <li><a href="#">Kabar Palmerah</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Advertise</a></li>
+      <li><a href="#">Career</a></li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+    <p class="footer__copyright">Copyright 2008 - 2023 PT. Kompas Cyber Media (Kompas Gramedia Digital Group). All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="js/main.js?v=3"></script>
+</body>
+</html>

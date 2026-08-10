@@ -1,0 +1,836 @@
+/* ==========================================================================
+   Menyala Indonesia — Kompas.com kanal
+   Implemented from Figma: "Menyala Indonesiaku" (node 1:40192)
+   Notes:
+   - Hero banner illustration intentionally replaced with a solid color
+     placeholder (per request).
+   - All photographic content (thumbnails, ad creatives) rendered as
+     neutral placeholder blocks — original Figma image/icon assets were
+     not downloadable in this session.
+   - "Artikel Lainnya" grid (below Video section) intentionally skipped.
+   ========================================================================== */
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, h1, h2, h3, h4, p, ul, figure { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+input { font: inherit; }
+img, svg { display: block; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* Text */
+  --text-primary: #2a2a2a;
+  --text-secondary: #5a5a5a;
+  --text-tertiary: #888888;
+  --text-disabled: #b8b8b8;
+
+  /* Neutrals */
+  --neutral-darkest: #2a2a2a;
+  --neutral-lighter: #e7e7e7;
+  --border-neutral-70: #515358;
+
+  /* Surfaces */
+  --bg-elevation-1: #f7f7f7;
+  --bg-elevation-2: #f0f0f0;
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Brand / accents */
+  --blue-link: #0f79c6;
+  --blue-subscribe: #1583cc;
+  --error-red: #d92d20;
+
+  /* Hero */
+  --hero-heading: #b4470f;      /* rust heading (Figma uses a paper-texture fill) */
+  --hero-heading-light: #be5015;
+  --hero-heading-dark: #a63d06;
+  --hero-subtitle: #454545;
+
+  /* Footer (Roboto-based palette) */
+  --footer-bg: #000000;
+  --footer-border: #515151;
+  --footer-heading: #e7e7e7;
+  --footer-text: #999999;
+  --footer-text-dim: #808080;
+
+  /* Layout */
+  --container-width: 1070px;
+  --navbar-height: 112px;
+
+  /* Fonts */
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Libertinus Serif", "Linux Libertine", Georgia, "Times New Roman", serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-footer: "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Content column is exactly 1070px wide on desktop (matching Figma), with
+   20px breathing room on either side once the viewport gets narrower. */
+.container {
+  width: 100%;
+  max-width: calc(var(--container-width) + 40px);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: -0.12px;
+}
+.meta--tertiary { color: var(--text-tertiary); font-size: 12px; }
+.dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* Generic placeholder block for missing image/asset content */
+.placeholder-block {
+  background: linear-gradient(135deg, var(--neutral-lighter) 0%, #d8d8d8 100%);
+  position: relative;
+}
+.placeholder-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.35) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.35) 75%, transparent 75%, transparent);
+  background-size: 16px 16px;
+  opacity: 0.4;
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+/* Pinned to the top: stays put while the page scrolls. `sticky` keeps the
+   navbar in flow, so no spacer/offset is needed below it. */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--black);
+  transform: translateY(0);
+  transition: transform 0.28s ease;
+  will-change: transform;
+}
+/* JS toggles this on scroll direction: slides the whole navbar (utility bar
+   + menu row) up out of view, and back down when scrolling up. */
+.navbar.navbar--hidden {
+  transform: translateY(-100%);
+}
+
+.navbar__utility { background: var(--black); }
+.navbar__utility-inner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  height: 64px;
+  padding: 0 20px;
+}
+
+.navbar__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.navbar__logo img { display: block; width: 183px; height: 36px; }
+
+.navbar__search {
+  flex: 1 1 auto;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--neutral-darkest);
+  border: 1px solid var(--border-neutral-70);
+  border-radius: 8px;
+  padding: 8px 11px 8px 12px;
+}
+.navbar__search input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+}
+.navbar__search input::placeholder { color: #c1c1b9; }
+.navbar__search button { color: #c1c1b9; flex-shrink: 0; display: flex; }
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.btn--subscribe {
+  background: var(--blue-subscribe);
+  color: var(--white);
+  padding: 8px 16px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  position: relative;
+}
+.icon-btn--font {
+  font-size: 14px;
+  font-weight: 600;
+  gap: 4px;
+}
+.icon-btn--sm { color: var(--white); }
+
+.badge-new {
+  position: absolute;
+  top: -10px;
+  right: -14px;
+  background: var(--error-red);
+  color: var(--white);
+  font-size: 8px;
+  letter-spacing: -0.16px;
+  border-radius: 999px;
+  padding: 1px 4px;
+  line-height: 1.3;
+}
+
+.navbar__menu {
+  background: var(--black);
+  border-top: 1px solid #383838;
+}
+.navbar__menu-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 48px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.navbar__menu-inner::-webkit-scrollbar { display: none; }
+.navbar__menu-list {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.navbar__menu-list a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  white-space: nowrap;
+}
+.navbar__menu-list a:hover { color: #b8b8b8; }
+
+/* ==========================================================================
+   HERO
+   Figma frame: 1440 x 748. Ad slot on top (y 0–348), headline block at y 400.
+   The bottom ~108px is deliberately left open for the Rolls carousel, which
+   is pulled up over it.
+   ========================================================================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-top: 24px;
+  padding-bottom: 197px;
+  background-color: #f4ecdf; /* average tone of the artwork, shows while loading */
+  background-image: url("../assets/img/hero-bg.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover; /* stays full-bleed as the viewport widens */
+}
+
+/* Decorative artwork pinned to the viewport edges. Widths are expressed as a
+   share of the viewport (502/1440 and 349/1440) so they grow with the screen,
+   capped at their native size so they never upscale past the Figma artwork. */
+.hero__asset {
+  position: absolute;
+  z-index: 0;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+.hero__asset--left {
+  left: 0;
+  bottom: 0;
+  width: clamp(170px, 34.9vw, 502px);
+}
+.hero__asset--right {
+  right: 0;
+  bottom: 65px;
+  width: clamp(120px, 24.24vw, 349px);
+}
+
+/* Wide blurred white ellipse that lightens the bottom edge of the hero.
+   Approximates the blurred ellipse in Figma (original SVG not downloadable). */
+.hero__fade {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 88%;
+  width: 200%;
+  height: 682px;
+  transform: translateX(-50%);
+  background: var(--white);
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__text {
+  width: 100%;
+  max-width: 743px;
+  margin-top: 76px; /* 24px slot padding + 52px gap to the headline */
+  text-align: center;
+}
+.hero__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(34px, 4.72vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--hero-heading);
+}
+/* Figma fills the headline with a paper texture; a vertical rust gradient
+   reads the same at display sizes. Guarded so the text never goes invisible. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero__title {
+    background-image: linear-gradient(180deg, var(--hero-heading-light) 0%, var(--hero-heading-dark) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+.hero__subtitle {
+  margin-top: 20px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(15px, 1.59vw, 22.9px);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--hero-subtitle);
+}
+
+/* Ad slot (shared: hero leaderboard + sidebar ad slots) */
+.ad-slot {
+  width: 100%;
+  background: var(--bg-elevation-1);
+  overflow: hidden;
+}
+.ad-slot__image { width: 100%; height: 250px; object-fit: cover; }
+/* 1070-wide card with a 968x250 creative inset 51px on each side */
+.ad-slot--leaderboard .ad-slot__image {
+  width: min(968px, 100%);
+  margin: 0 auto;
+}
+.ad-slot__caption {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+  color: var(--text-primary);
+  padding: 12px 10px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ad-slot__caption a { color: var(--blue-link); font-weight: 600; }
+
+/* ==========================================================================
+   ROLLS (horizontal carousel)
+   ========================================================================== */
+/* The carousel is pulled up so it sits over the light bottom edge of the hero,
+   as it does in Figma (hero ends at y=748, Rolls starts at y=640). */
+.rolls {
+  position: relative;
+  z-index: 3;
+  margin-top: -108px;
+  padding-bottom: 24px;
+}
+.rolls__container { position: relative; }
+.rolls__track {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.rolls__track::-webkit-scrollbar { display: none; }
+
+.roll-card {
+  position: relative;
+  flex: 0 0 140px;
+  width: 140px;
+  height: 248px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.roll-card__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.roll-card__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(18,18,18,0) 40%, rgba(18,18,18,0.65) 100%);
+}
+.roll-card__title {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+  color: var(--white);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: calc(50% - 12px);
+  width: 32px; height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border: 1px solid #f5f5f5;
+  border-radius: 999px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: var(--text-primary);
+  z-index: 2;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+.carousel-nav:hover { background: var(--bg-elevation-1); }
+.carousel-nav--next { right: -16px; }
+.carousel-nav--prev { left: -16px; }
+.carousel-nav--prev svg { transform: scaleX(-1); }
+
+/* JS toggles this at scroll start/end so you can't scroll past the track */
+.carousel-nav.is-disabled {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ARTICLE HIGHLIGHT
+   ========================================================================== */
+.article-highlight { padding: 24px 0 32px; }
+
+.headline-card {
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.headline-card__image { flex: 1 1 0; min-width: 0; height: 330px; object-fit: cover; }
+.headline-card__body {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--bg-elevation-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 24px;
+}
+.headline-card__title {
+  font-size: 24px; /* per request — Figma spec was 20px */
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  color: var(--text-primary);
+}
+
+.article-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+}
+.article-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.article-card__thumb {
+  width: 100%;
+  height: 144px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.article-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.32px;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   VIDEO + RIGHT ADS
+   ========================================================================== */
+.video-ads { padding-bottom: 40px; }
+.video-ads__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+/* The separator bars belong to the LEFT column only (740px in Figma) — they
+   must not stretch under the right ads column, so they're scoped here
+   rather than on .video-ads itself. */
+.video-ads__main { flex: 1 1 0; min-width: 0; border-top: 8px solid var(--bg-elevation-2); padding-top: 24px; }
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+.section-heading h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.44px;
+  color: var(--text-primary);
+}
+
+.video-featured {
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.video-featured__thumb { position: relative; flex: 1 1 0; min-width: 0; height: 208px; overflow: hidden; }
+.video-featured__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video-featured__body {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--bg-elevation-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 24px;
+}
+.video-featured__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  color: var(--text-primary);
+}
+
+.duration-badge {
+  position: absolute;
+  right: 8px; bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 4px 6px;
+  border-radius: 12px;
+  background: rgba(18,18,18,0.75);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+}
+
+.video-grid-wrap { position: relative; padding-top: 24px; }
+.video-grid { display: flex; gap: 16px; }
+.video-card { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.video-card__thumb { position: relative; height: 97px; border-radius: 8px; overflow: hidden; }
+.video-card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.28px;
+  color: var(--text-primary);
+  padding: 8px 0;
+}
+
+.video-ads__sidebar {
+  flex: 0 0 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.ad-slot--300x250 .ad-slot__image { height: 250px; }
+.ad-slot--300x600 .ad-slot__image { height: 600px; }
+
+/* ==========================================================================
+   TERKINI LAINNYA
+   Figma uses Roboto here (not Inter, unlike the rest of the page) — kept
+   as-is to match spec.
+   ========================================================================== */
+/* Lives inside .video-ads__main (left column) so it's the same 740px width
+   as the Video block above it, and stacks below it — not below the taller
+   right ads column. */
+.terkini { padding-top: 16px; padding-bottom: 40px; }
+.terkini__separator {
+  height: 8px;
+  background: var(--bg-elevation-2);
+  margin-bottom: 24px;
+}
+.terkini__heading {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.44px;
+  color: var(--text-primary);
+  padding-bottom: 16px;
+}
+
+.terkini__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.terkini-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.terkini-item__thumb {
+  flex: 0 0 236px;
+  width: 236px;
+  height: 130px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.terkini-item__body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+.terkini-item__title {
+  font-family: var(--font-footer);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: 0.2px;
+  color: #333333;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.meta--terkini {
+  font-family: var(--font-footer);
+  color: #878b92;
+  text-transform: none;
+}
+.meta--terkini span:first-child { text-transform: uppercase; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.site-footer {
+  background: var(--footer-bg);
+  font-family: var(--font-footer);
+  padding-top: 4px;
+  border-top: 4px solid var(--footer-border);
+}
+
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 20px 24px;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+.footer__brand {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 240px;
+}
+.footer__logo {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--white);
+}
+.footer__logo span { color: #e2233b; }
+
+.footer__social { display: flex; gap: 8px; }
+.footer__social a {
+  width: 32px; height: 32px;
+  border: 1px solid #fbfbfb;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+
+.footer__apps { display: flex; gap: 16px; flex-wrap: wrap; }
+.footer__app-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #515151;
+  border-radius: 6px;
+  padding: 5px 10px;
+  color: var(--white);
+  font-size: 12px;
+  line-height: 1.2;
+}
+.footer__app-badge span { display: flex; flex-direction: column; }
+.footer__app-badge small { font-size: 9px; color: #b8b8b8; }
+
+.footer__certs p { color: var(--footer-text-dim); font-size: 12px; line-height: 1.4; margin-bottom: 8px; }
+.footer__cert-badges { display: flex; gap: 13px; }
+.cert-badge {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--footer-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9c9c9;
+}
+
+.footer__newsletter p { color: var(--footer-text); font-size: 14px; line-height: 1.4; margin-bottom: 8px; }
+.btn--newsletter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue-link);
+  color: var(--white);
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.footer__links { flex: 1 1 auto; display: flex; gap: 40px; }
+.footer__col h3 {
+  color: var(--footer-heading);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.footer__col a { color: var(--footer-text); font-size: 14px; }
+.footer__col a:hover { color: var(--white); }
+.footer__col li { line-height: 2; }
+
+.footer__col--kanal { flex: 1 1 auto; }
+.footer__kanal-grid { display: flex; justify-content: space-between; gap: 24px; }
+.footer__col--network { flex: 0 0 180px; }
+
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+.footer__legal-links a { color: var(--footer-text); font-size: 14px; }
+.footer__legal-links a:hover { color: var(--white); }
+.footer__copyright { color: var(--footer-text); font-size: 14px; line-height: 20px; }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .video-ads__inner { flex-direction: column; }
+  .video-ads__sidebar { flex-direction: row; width: 100%; }
+  .video-ads__sidebar .ad-slot { flex: 1 1 0; }
+}
+
+@media (max-width: 900px) {
+  .navbar__utility-inner { flex-wrap: wrap; gap: 16px; height: auto; padding: 12px 20px; }
+  .navbar__search { order: 3; max-width: 100%; }
+  .hero { padding-bottom: 150px; }
+  .rolls { margin-top: -80px; }
+  .headline-card { flex-direction: column; }
+  .headline-card__image { height: 220px; }
+  .headline-card__body { padding: 20px 24px; }
+  .article-grid { flex-wrap: wrap; }
+  .article-card { flex: 1 1 45%; }
+  .footer__top { flex-direction: column; }
+  .footer__links { flex-direction: column; gap: 24px; }
+}
+
+@media (max-width: 640px) {
+  .terkini-item__thumb { flex: 0 0 120px; width: 120px; height: 84px; }
+  .terkini-item__title { font-size: 16px; }
+  .hero { padding-bottom: 110px; }
+  .hero__text { margin-top: 48px; }
+  .hero__asset--left { width: 150px; }
+  .hero__asset--right { width: 110px; bottom: 40px; }
+  .rolls { margin-top: -48px; }
+  .video-featured { flex-direction: column; }
+  .video-featured__thumb { height: 180px; }
+  .video-featured__body { padding: 16px; }
+  .video-ads__sidebar { flex-direction: column; }
+  .footer__kanal-grid { flex-direction: column; gap: 8px; }
+  .navbar__actions { gap: 10px; }
+  .btn--subscribe { display: none; }
+}

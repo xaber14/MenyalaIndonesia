@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libertinus+Serif:wght@400;700&family=Playfair+Display:ital,wght@1,700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=18" />
+<link rel="stylesheet" href="css/style.css?v=26" />
 </head>
 <body>
 
@@ -187,6 +187,9 @@
   <!-- ============ ARTICLE HIGHLIGHT ============ -->
   <section class="article-highlight">
     <div class="container">
+      <!-- Mobile-only heading (Figma node 17:10270 "Artikel Terupdate") —
+           desktop's Article section has no section title, only mobile does. -->
+      <h2 class="article-highlight__heading">Artikel Terupdate</h2>
       <a class="headline-card" href="#">
         <img class="headline-card__image" src="assets/img/article/headline-self-reward.jpg" alt="Wanita membawa belanjaan di mal" loading="lazy" />
         <div class="headline-card__body">
@@ -198,27 +201,39 @@
       <div class="article-grid">
         <a class="article-card" href="#">
           <img class="article-card__thumb" src="assets/img/article/grid-bagaimana-industri.jpg" alt="Interior toko OH! SOME" loading="lazy" />
-          <h3 class="article-card__title">Bagaimana Industri Kesenangan Instan Menjinakkan Kecemasan Krisis</h3>
-          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          <div class="article-card__body">
+            <h3 class="article-card__title">Bagaimana Industri Kesenangan Instan Menjinakkan Kecemasan Krisis</h3>
+            <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          </div>
         </a>
         <a class="article-card" href="#">
           <img class="article-card__thumb" src="assets/img/article/grid-ilusi-kemewahan.jpg" alt="Kerumunan orang berjalan di trotoar kota" loading="lazy" />
-          <h3 class="article-card__title">Ilusi Kemewahan: Cara Kelas Menengah Merawat Waras di Tengah Ketidakpastian Finansial</h3>
-          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          <div class="article-card__body">
+            <h3 class="article-card__title">Ilusi Kemewahan: Cara Kelas Menengah Merawat Waras di Tengah Ketidakpastian Finansial</h3>
+            <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          </div>
         </a>
         <a class="article-card" href="#">
           <img class="article-card__thumb" src="assets/img/article/grid-self-reward-2.jpg" alt="Wanita berbelanja pakaian membawa tas belanja" loading="lazy" />
-          <h3 class="article-card__title">Self-Reward atau Pelarian? Menakar Hasrat Belanja Konsumen Saat Dompet Menipis</h3>
-          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          <div class="article-card__body">
+            <h3 class="article-card__title">Self-Reward atau Pelarian? Menakar Hasrat Belanja Konsumen Saat Dompet Menipis</h3>
+            <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          </div>
         </a>
         <a class="article-card" href="#">
           <img class="article-card__thumb" src="assets/img/article/grid-ekonomi-sedang-lesu.jpg" alt="Bangunan Toko Kopi Tuku" loading="lazy" />
-          <h3 class="article-card__title">Ekonomi Sedang Lesu, Tapi Mengapa Toko Kosmetik dan Kedai Kopi Premium Tetap Antre?</h3>
-          <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          <div class="article-card__body">
+            <h3 class="article-card__title">Ekonomi Sedang Lesu, Tapi Mengapa Toko Kosmetik dan Kedai Kopi Premium Tetap Antre?</h3>
+            <p class="meta"><span>News</span><span class="dot"></span><span>1 Menit lalu</span></p>
+          </div>
         </a>
       </div>
     </div>
   </section>
+
+  <!-- Mobile only: thick separator between Article and Video sections —
+       desktop already gets this via .video-ads__main's border-top. -->
+  <div class="section-divider--thick"></div>
 
   <!-- ============ VIDEO + RIGHT ADS ============ -->
   <section class="video-ads">
@@ -233,6 +248,8 @@
         <a class="video-featured" href="#">
           <div class="video-featured__thumb">
             <img src="assets/img/video/featured-mengapa.jpg" alt="Wanita membawa belanjaan di mal" loading="lazy" />
+            <!-- Mobile only (Figma node 17:10461 "Ikon/Kompas.com") — premium/subscriber badge -->
+            <span class="video-featured__premium-badge" aria-hidden="true">K+</span>
             <span class="duration-badge"><svg width="16" height="16"><use href="#icon-play"/></svg>05:25</span>
           </div>
           <div class="video-featured__body">
@@ -287,77 +304,106 @@
         <!-- Terkini Lainnya lives in the LEFT column, stacked below Video —
              the right ads column is taller and runs alongside both. -->
         <div class="terkini">
-          <div class="terkini__separator"></div>
           <h2 class="terkini__heading">Terkini Lainnya</h2>
           <div class="terkini__list">
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-1-pejabat-muda.jpg" alt="Pejabat muda bekerja di depan komputer" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Selain Gibran, Ini 21 Kepala Daerah Berusia di Bawah 40 Tahun yang Bisa Jadi Capres</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-2-acara-kursi.jpg" alt="Deretan kursi kosong di sebuah acara" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Syukuran Putusan MK, Relawan Gibran Salatiga Berangkat ke Semarang</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-3-kebakaran-hutan.jpg" alt="Kebakaran hutan berasap" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">27 Hektar Lahan di Hutan Lindung Egon Ilinmedo Sikka Terbakar</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-4-rice-cooker.jpg" alt="Rice cooker di atas meja dapur" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Pemprov Banten Data Warga Calon Penerima "Rice Cooker" Gratis</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-5-gajah.jpg" alt="Gajah di tepi air saat senja" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Anak Gajah Terjebak di Sumur Jambi, Evakuasi Ditunggu Kawanannya</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-1-pejabat-muda.jpg" alt="Pejabat muda bekerja di depan komputer" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Selain Gibran, Ini 21 Kepala Daerah Berusia di Bawah 40 Tahun yang Bisa Jadi Capres</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-2-acara-kursi.jpg" alt="Deretan kursi kosong di sebuah acara" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Syukuran Putusan MK, Relawan Gibran Salatiga Berangkat ke Semarang</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-3-kebakaran-hutan.jpg" alt="Kebakaran hutan berasap" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">27 Hektar Lahan di Hutan Lindung Egon Ilinmedo Sikka Terbakar</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-4-rice-cooker.jpg" alt="Rice cooker di atas meja dapur" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Pemprov Banten Data Warga Calon Penerima "Rice Cooker" Gratis</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-5-gajah.jpg" alt="Gajah di tepi air saat senja" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Anak Gajah Terjebak di Sumur Jambi, Evakuasi Ditunggu Kawanannya</h3>
-            <p class="meta meta--terkini"><span>NAMA KANAL</span><span class="dot"></span><span>24 September 2023</span></p>
+            <div class="meta meta--terkini">
+              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__date">24 September 2023</p>
+            </div>
           </div>
         </a>
           </div>

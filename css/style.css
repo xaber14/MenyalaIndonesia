@@ -506,6 +506,9 @@ body {
    ARTICLE HIGHLIGHT
    ========================================================================== */
 .article-highlight { padding: 24px 0 32px; }
+/* Mobile-only (Figma node 17:10270) — desktop's Article section has no
+   heading, only the mobile "Artikel Terupdate" version does. */
+.article-highlight__heading { display: none; }
 
 .headline-card {
   display: flex;
@@ -543,6 +546,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.article-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
 }
 .article-card__thumb {
   width: 100%;
@@ -610,6 +619,9 @@ body {
   color: var(--text-primary);
 }
 
+/* Mobile-only (see the 640px block below) — hidden by default. */
+.video-featured__premium-badge { display: none; }
+
 .duration-badge {
   position: absolute;
   right: 8px; bottom: 8px;
@@ -659,11 +671,11 @@ body {
    as the Video block above it, and stacks below it — not below the taller
    right ads column. */
 .terkini { padding-top: 16px; padding-bottom: 40px; }
-.terkini__separator {
-  height: 8px;
-  background: var(--bg-elevation-2);
-  margin-bottom: 24px;
-}
+
+/* Mobile-only — sits between Article and Video (see index.html). Desktop
+   gets the equivalent break via .video-ads__main's border-top instead. */
+.section-divider--thick { display: none; }
+
 .terkini__heading {
   font-family: var(--font-sans);
   font-size: 22px;
@@ -676,13 +688,13 @@ body {
 .terkini__list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px; /* per request — Figma node 47:2902 */
 }
 
 .terkini-item {
   display: flex;
   gap: 16px;
-  align-items: flex-start;
+  align-items: center; /* center the title+meta group against the thumbnail, not top-aligned */
 }
 .terkini-item__thumb {
   flex: 0 0 236px;
@@ -690,6 +702,7 @@ body {
   height: 130px;
   border-radius: 8px;
   object-fit: cover;
+  background: #ececec;
 }
 .terkini-item__body {
   flex: 1 1 0;
@@ -700,23 +713,33 @@ body {
   padding-top: 4px;
 }
 .terkini-item__title {
-  font-family: var(--font-footer);
-  font-weight: 500;
+  font-family: var(--font-sans); /* Inter, per request */
+  font-weight: 600;
   font-size: 20px;
   line-height: 1.3;
-  letter-spacing: 0.2px;
+  letter-spacing: -0.4px;
   color: #333333;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* "kanal dan waktu": stacked, not inline with a dot separator (Figma
+   node 47:3053) */
 .meta--terkini {
-  font-family: var(--font-footer);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* override .meta's align-items:center — that was a
+    cross-axis rule for row layouts; in this column layout it was centering
+    "NAMA KANAL" and the date instead of keeping them left-aligned */
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: -0.24px;
   color: #878b92;
-  text-transform: none;
 }
-.meta--terkini span:first-child { text-transform: uppercase; }
+.terkini-item__kanal { font-weight: 600; text-transform: uppercase; }
+.terkini-item__date { font-weight: 400; }
 
 /* ==========================================================================
    FOOTER
@@ -866,6 +889,121 @@ body {
 @media (max-width: 640px) {
   .terkini-item__thumb { flex: 0 0 120px; width: 120px; height: 84px; }
   .terkini-item__title { font-size: 16px; }
+  /* Divider between cards (Figma node 17:10594) — tighten the list gap to
+     16px and let each card's own bottom padding+border make up the other
+     16px, so the total rhythm between cards still reads as ~32px. */
+  .terkini__list { gap: 16px; }
+  .terkini-item {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e7e8e9;
+  }
+  .terkini-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  /* ---- Article Highlight → "Artikel Terupdate" (Figma node 17:10270) ----
+     Mobile swaps the desktop's side-by-side headline card + 4-across grid
+     for a stacked headline card + a vertical list of thumb+text rows
+     separated by dividers, with its own section heading. */
+  .article-highlight {
+    padding: 0 0 24px;
+    border-bottom: 1px solid var(--neutral-lighter);
+  }
+  .article-highlight__heading {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.44px;
+    color: var(--text-primary);
+    padding: 40px 0 16px;
+  }
+
+  /* Headline card: image on top (no card-level rounding/clip since the
+     text panel below is no longer a boxed gray panel), title+meta below. */
+  .headline-card { border-radius: 0; overflow: visible; padding-bottom: 24px; }
+  .headline-card__image { height: 185px; border-radius: 8px; }
+  .headline-card__body { background: none; padding: 8px 0 0; }
+  .headline-card__title { font-size: 16px; letter-spacing: -0.32px; }
+  /* Figma uses a short vertical line between "News" and the timestamp here,
+     not the dot used elsewhere on the site. */
+  .headline-card .dot, .article-card .dot {
+    width: 1px;
+    height: 12px;
+    border-radius: 0;
+    background: var(--text-secondary);
+    opacity: 1;
+  }
+
+  /* Grid → vertical list: thumb (100x100) beside title+meta, rows divided
+     by hairlines instead of the desktop's row/column gaps. */
+  .article-grid { flex-direction: column; flex-wrap: nowrap; gap: 0; padding-top: 0; }
+  .article-card {
+    flex: 1 1 auto; /* overrides the 900px breakpoint's "1 1 45%" two-up grid */
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 0 16px;
+    border-bottom: 1px solid var(--neutral-lighter);
+  }
+  .article-card:first-child { padding-top: 0; }
+  .article-card:last-child { padding-bottom: 0; border-bottom: none; }
+  .article-card__thumb { flex: 0 0 100px; width: 100px; height: 100px; }
+  .article-card__body { flex: 1 1 0; min-width: 0; padding-top: 4px; }
+
+  /* ---- Video (Figma node 17:10461) ----
+     Featured card loses its title/date panel (mobile shows just the
+     thumbnail + a premium badge) and the row below becomes a fixed-width,
+     swipe-to-scroll strip instead of desktop's evenly-filled 4-up grid. */
+  .video-ads__main { border-top: none; padding-top: 0; }
+  .section-heading { padding-top: 24px; }
+
+  .video-featured { border-radius: 8px; }
+  .video-featured__thumb { height: 184px; }
+  .video-featured__body { display: none; }
+  .video-featured__premium-badge {
+    display: flex;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #f37c20; /* Aksen / #F37C20, per Figma */
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+  }
+
+  /* Also closes off the Video block the same way Article's section does. */
+  .video-grid-wrap {
+    padding-top: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--neutral-lighter);
+  }
+  /* Desktop's prev/next buttons become unnecessary — the row scrolls by
+     swipe like .rolls__track does. */
+  .video-grid-wrap .carousel-nav { display: none; }
+  .video-grid {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .video-grid::-webkit-scrollbar { display: none; }
+  .video-card { flex: 0 0 150px; width: 150px; } /* fixed size, per request */
+  .video-card__thumb { height: 84px; }
+  .video-card .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .video-card .dot { display: none; }
 
   /* On desktop these floating round buttons poke 16px outside the card
      row on purpose (ample page margin absorbs it). On mobile the page
@@ -897,20 +1035,23 @@ body {
   /* Figma mobile hero: 360px tall. Taller than a bare text-fit box so the
      headline/subtitle can stay near the top, clearly readable, while the
      left/right artwork sits lower rather than crowding the text. */
-  .hero { padding-top: 0; padding-bottom: 110px; min-height: 360px; }
+  .hero { padding-top: 0; padding-bottom: 110px; min-height: 352px; }
   .hero .ad-slot--leaderboard { display: none; } /* replaced by .mobile-top-ads above */
   /* Sized for desktop's tall 747px hero — on mobile's much shorter hero its
      28px blur bleeds upward and washes out the left/right artwork. */
   .hero__fade { display: none; }
-  .hero__text { margin-top: 28px; }
+  .hero__text { margin-top: 32px; }
   .hero__title { font-size: 32px; }
   .hero__subtitle { font-size: 16px; }
   .hero__asset--left { width: 130px; top: 150px; left: -15px; }
   .hero__asset--right { width: 90px; top: 180px; right: -15px; }
-  .rolls { margin-top: -48px; }
-  .video-featured { flex-direction: column; }
-  .video-featured__thumb { height: 180px; }
-  .video-featured__body { padding: 16px; }
+  .rolls { margin-top: -48px; padding-bottom: 0; }
+  .section-divider--thick { display: block; height: 8px; background: var(--bg-elevation-2); }
+  /* .video-featured / __thumb / __body are already styled in the Video
+     block above this one — this used to have its own duplicate/conflicting
+     copy here that silently won the cascade (later = wins at equal
+     specificity), which is why the featured card had collapsed to 0
+     height. Removed. */
   .video-ads__sidebar { flex-direction: column; }
   .footer__kanal-grid { flex-direction: column; gap: 8px; }
   .btn--subscribe { display: none; }

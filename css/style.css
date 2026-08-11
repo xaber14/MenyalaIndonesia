@@ -1040,7 +1040,7 @@ body {
   /* Sized for desktop's tall 747px hero — on mobile's much shorter hero its
      28px blur bleeds upward and washes out the left/right artwork. */
   .hero__fade { display: none; }
-  .hero__text { margin-top: 32px; }
+  .hero__text { margin-top: 90px; }
   .hero__title { font-size: 32px; }
   .hero__subtitle { font-size: 16px; }
   .hero__asset--left { width: 130px; top: 150px; left: -15px; }

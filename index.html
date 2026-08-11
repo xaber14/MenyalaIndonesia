@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libertinus+Serif:wght@400;700&family=Playfair+Display:ital,wght@1,700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=27" />
+<link rel="stylesheet" href="css/style.css?v=32" />
 </head>
 <body>
 
@@ -301,6 +301,43 @@
           </button>
         </div>
 
+        <!-- ============ PODCAST (Figma node 63:5946) ============ -->
+        <div class="podcast">
+          <div class="podcast__separator podcast__separator--top"></div>
+          <div class="section-heading">
+            <h2>Podcast</h2>
+            <svg width="24" height="24"><use href="#icon-chevron-right"/></svg>
+          </div>
+
+          <div class="podcast-grid-wrap">
+            <div class="podcast-grid" id="podcastTrack">
+              <a class="podcast-card" href="#">
+                <img class="podcast-card__thumb" src="assets/img/podcast/dengar-stori-12-agustus-2026.png" alt="Dengar Stori 12 Agustus 2026" loading="lazy" />
+                <h3 class="podcast-card__title">Dengar Stori hari ini 12 Agustus 2026</h3>
+                <p class="meta"><span>Kompas.com</span><span class="dot"></span><span>12 Agustus 2026</span></p>
+              </a>
+              <a class="podcast-card" href="#">
+                <img class="podcast-card__thumb" src="assets/img/podcast/dengar-stori-13-agustus-2026.png" alt="Dengar Stori 13 Agustus 2026" loading="lazy" />
+                <h3 class="podcast-card__title">Dengar Stori hari ini 13 Agustus 2026</h3>
+                <p class="meta"><span>Kompas.com</span><span class="dot"></span><span>13 Agustus 2026</span></p>
+              </a>
+              <a class="podcast-card" href="#">
+                <img class="podcast-card__thumb" src="assets/img/podcast/dengar-stori-14-agustus-2026.png" alt="Dengar Stori 14 Agustus 2026" loading="lazy" />
+                <h3 class="podcast-card__title">Dengar Stori hari ini 14 Agustus 2026</h3>
+                <p class="meta"><span>Kompas.com</span><span class="dot"></span><span>14 Agustus 2026</span></p>
+              </a>
+            </div>
+            <button class="carousel-nav carousel-nav--prev" data-target="podcastTrack" aria-label="Sebelumnya">
+              <svg width="16" height="16"><use href="#icon-chevron-right"/></svg>
+            </button>
+            <button class="carousel-nav carousel-nav--next" data-target="podcastTrack" aria-label="Selanjutnya">
+              <svg width="16" height="16"><use href="#icon-chevron-right"/></svg>
+            </button>
+          </div>
+
+          <div class="podcast__separator"></div>
+        </div>
+
         <!-- Terkini Lainnya lives in the LEFT column, stacked below Video —
              the right ads column is taller and runs alongside both. -->
         <div class="terkini">
@@ -432,34 +469,28 @@
 
     <div class="footer__brand">
       <a href="#" class="footer__logo" aria-label="Kompas.com">
-        KOMPAS<span>.com</span>
+        <img src="assets/img/footer/logo-kompas-white.png" width="250" height="50" alt="Kompas.com - Jernih Melihat Dunia" />
       </a>
 
       <div class="footer__social">
-        <a href="#" aria-label="Facebook"><svg width="16" height="16"><use href="#icon-facebook"/></svg></a>
-        <a href="#" aria-label="X (Twitter)"><svg width="16" height="16"><use href="#icon-x"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg width="20" height="20"><use href="#icon-instagram"/></svg></a>
-        <a href="#" aria-label="Line"><svg width="16" height="16"><use href="#icon-line"/></svg></a>
-        <a href="#" aria-label="Pinterest"><svg width="20" height="20"><use href="#icon-pinterest"/></svg></a>
+        <a href="#" aria-label="Facebook"><img src="assets/img/footer/social-facebook.png" width="16" height="16" alt="" /></a>
+        <a href="#" aria-label="X (Twitter)"><img src="assets/img/footer/social-x.png" width="16" height="16" alt="" /></a>
+        <a href="#" aria-label="Instagram"><img src="assets/img/footer/social-instagram.png" width="20" height="20" alt="" /></a>
+        <a href="#" aria-label="Line"><img src="assets/img/footer/social-line.png" width="16" height="16" alt="" /></a>
+        <a href="#" aria-label="Pinterest"><img src="assets/img/footer/social-pinterest.png" width="20" height="20" alt="" /></a>
       </div>
 
       <div class="footer__apps">
-        <a href="#" class="footer__app-badge">
-          <svg width="18" height="18"><use href="#icon-apple"/></svg>
-          <span><small>Download di</small>App Store</span>
-        </a>
-        <a href="#" class="footer__app-badge">
-          <svg width="18" height="18"><use href="#icon-play-store"/></svg>
-          <span><small>Temukan di</small>Google Play</span>
-        </a>
+        <a href="#"><img src="assets/img/footer/appstore-badge.png" width="114" height="38" alt="Download di App Store" /></a>
+        <a href="#"><img src="assets/img/footer/googleplay-badge.png" width="128" height="38" alt="Temukan di Google Play" /></a>
       </div>
 
       <div class="footer__certs">
         <p>Penghargaan dan sertifikat:</p>
         <div class="footer__cert-badges">
-          <span class="cert-badge"><svg width="20" height="20"><use href="#icon-cert"/></svg></span>
-          <span class="cert-badge"><svg width="20" height="20"><use href="#icon-cert"/></svg></span>
-          <span class="cert-badge"><svg width="20" height="20"><use href="#icon-cert"/></svg></span>
+          <img src="assets/img/footer/award-1.png" width="32" height="25" alt="Penghargaan WOW Brand 2019" />
+          <img src="assets/img/footer/award-2.png" width="26" height="25" alt="Penghargaan Superbrands" />
+          <img src="assets/img/footer/award-3.png" width="25" height="25" alt="Sertifikat jaringan" />
         </div>
       </div>
 

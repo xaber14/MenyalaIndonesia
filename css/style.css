@@ -663,6 +663,42 @@ body {
 .ad-slot--300x600 .ad-slot__image { height: 600px; }
 
 /* ==========================================================================
+   PODCAST (Figma node 63:5946)
+   Lives in the LEFT column between Video and Terkini Lainnya — same 740px
+   width, same section-heading pattern, bracketed top AND bottom by the
+   same 8px divider (Terkini no longer has its own, top one separates
+   Podcast from Video above it).
+   ========================================================================== */
+.podcast { padding-top: 0; }
+.podcast .section-heading { margin-top: 24px; }
+.podcast-grid-wrap { position: relative; }
+.podcast-grid { display: flex; gap: 16px; }
+.podcast-card { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.podcast-card__thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+.podcast-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.32px;
+  color: var(--text-primary);
+}
+.podcast__separator {
+  height: 8px;
+  background: var(--bg-elevation-2);
+  margin-top: 24px;
+}
+/* .video-grid-wrap has no bottom padding of its own on desktop, so this
+   separator needs its own 24px top margin to avoid sitting flush against
+   the video row above it. */
+.podcast__separator--top { margin-top: 24px; }
+
+/* ==========================================================================
    TERKINI LAINNYA
    Figma uses Roboto here (not Inter, unlike the rest of the page) — kept
    as-is to match spec.
@@ -670,7 +706,7 @@ body {
 /* Lives inside .video-ads__main (left column) so it's the same 740px width
    as the Video block above it, and stacks below it — not below the taller
    right ads column. */
-.terkini { padding-top: 16px; padding-bottom: 40px; }
+.terkini { padding-top: 24px; padding-bottom: 40px; }
 
 /* Mobile-only — sits between Article and Video (see index.html). Desktop
    gets the equivalent break via .video-ads__main's border-top instead. */
@@ -766,14 +802,8 @@ body {
   gap: 32px;
   max-width: 240px;
 }
-.footer__logo {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 700;
-  font-size: 22px;
-  color: var(--white);
-}
-.footer__logo span { color: #e2233b; }
+.footer__logo { display: block; }
+.footer__logo img { display: block; width: 187px; height: auto; }
 
 .footer__social { display: flex; gap: 8px; }
 .footer__social a {
@@ -786,32 +816,12 @@ body {
   color: var(--white);
 }
 
-.footer__apps { display: flex; gap: 16px; flex-wrap: wrap; }
-.footer__app-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid #515151;
-  border-radius: 6px;
-  padding: 5px 10px;
-  color: var(--white);
-  font-size: 12px;
-  line-height: 1.2;
-}
-.footer__app-badge span { display: flex; flex-direction: column; }
-.footer__app-badge small { font-size: 9px; color: #b8b8b8; }
+.footer__apps { display: flex; gap: 12px; flex-wrap: wrap; }
+.footer__apps img { display: block; height: 38px; width: auto; }
 
 .footer__certs p { color: var(--footer-text-dim); font-size: 12px; line-height: 1.4; margin-bottom: 8px; }
-.footer__cert-badges { display: flex; gap: 13px; }
-.cert-badge {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--footer-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #c9c9c9;
-}
+.footer__cert-badges { display: flex; align-items: center; gap: 13px; }
+.footer__cert-badges img { display: block; height: 25px; width: auto; }
 
 .footer__newsletter p { color: var(--footer-text); font-size: 14px; line-height: 1.4; margin-bottom: 8px; }
 .btn--newsletter {
@@ -1004,6 +1014,37 @@ body {
     gap: 2px;
   }
   .video-card .dot { display: none; }
+
+  /* ---- Podcast ----
+     Same treatment as Video: fixed-width cards, swipe-to-scroll instead of
+     desktop's evenly-filled row + prev/next buttons. */
+  .podcast { padding-top: 0; }
+  .podcast .section-heading { margin-top: 16px; }
+  .podcast-grid-wrap .carousel-nav { display: none; }
+  .podcast-grid {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .podcast-grid::-webkit-scrollbar { display: none; }
+  .podcast-card { flex: 0 0 140px; width: 140px; } /* fixed size, per request */
+  .podcast-card__title { font-size: 14px; letter-spacing: -0.28px; }
+  .podcast-card .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .podcast-card .dot { display: none; }
+  .podcast__separator { margin-top: 16px; }
+  .podcast__separator--top { margin-top: 0; }
+  /* The separator after Podcast breaks out of .container's 20px side
+     padding to run edge-to-edge, unlike the one above Podcast. */
+  .podcast__separator:not(.podcast__separator--top) {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+  }
 
   /* On desktop these floating round buttons poke 16px outside the card
      row on purpose (ample page margin absorbs it). On mobile the page

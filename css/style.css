@@ -212,6 +212,9 @@ body {
   gap: 4px;
 }
 .icon-btn--sm { color: var(--white); }
+/* Mobile-only combo button (see the 640px navbar block below) — hidden by
+   default so it never appears at tablet/desktop widths. */
+.navbar__menu-search { display: none; }
 
 .badge-new {
   position: absolute;
@@ -410,6 +413,11 @@ body {
   justify-content: center;
 }
 .ad-slot__caption a { color: var(--blue-link); font-weight: 600; }
+
+/* Mobile-only top ad strip (Figma node 17:10187). Hidden by default —
+   shown only at the mobile breakpoint below, where it replaces the
+   desktop .ad-slot--leaderboard inside the hero. */
+.mobile-top-ads { display: none; }
 
 /* ==========================================================================
    ROLLS (horizontal carousel)
@@ -831,7 +839,12 @@ body {
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 1100px) {
-  .video-ads__inner { flex-direction: column; }
+  /* align-items:flex-start (set for the desktop row layout, to top-align
+     main/sidebar) becomes a CROSS-AXIS = horizontal rule once the container
+     switches to column below — without overriding it, main/sidebar
+     shrink-to-fit their content's width instead of filling the row,
+     which was quietly overflowing the page on narrow viewports. */
+  .video-ads__inner { flex-direction: column; align-items: stretch; }
   .video-ads__sidebar { flex-direction: row; width: 100%; }
   .video-ads__sidebar .ad-slot { flex: 1 1 0; }
 }
@@ -853,16 +866,108 @@ body {
 @media (max-width: 640px) {
   .terkini-item__thumb { flex: 0 0 120px; width: 120px; height: 84px; }
   .terkini-item__title { font-size: 16px; }
-  .hero { padding-bottom: 110px; }
-  .hero__text { margin-top: 48px; }
-  .hero__asset--left { width: 150px; }
-  .hero__asset--right { width: 110px; top: 60px; }
+
+  /* On desktop these floating round buttons poke 16px outside the card
+     row on purpose (ample page margin absorbs it). On mobile the page
+     margin IS 20px total, so poking out was causing page-wide horizontal
+     scroll — pull them back to just inside the edge instead. */
+  .carousel-nav--next { right: 4px; }
+  .carousel-nav--prev { left: 4px; }
+
+  /* ---- Mobile top ad strip (Figma node 17:10187) ----
+     Flush below the navbar with a flat #F7F7F7 background — swaps in for
+     the desktop ad slot that normally lives inside the hero. */
+  .mobile-top-ads { display: block; background: var(--bg-elevation-1); }
+  .mobile-top-ads__inner { display: flex; flex-direction: column; align-items: center; padding-top: 0; padding-bottom: 0; }
+  .mobile-top-ads__image { width: 100%; height: 100px; object-fit: cover; background: #e8e8e8; display: block; }
+  .mobile-top-ads__caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 50px;
+    font-size: 12px;
+    letter-spacing: -0.12px;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+  }
+  .mobile-top-ads__caption a { color: var(--blue-link); font-weight: 700; }
+
+  /* Figma mobile hero: 360px tall. Taller than a bare text-fit box so the
+     headline/subtitle can stay near the top, clearly readable, while the
+     left/right artwork sits lower rather than crowding the text. */
+  .hero { padding-top: 0; padding-bottom: 110px; min-height: 360px; }
+  .hero .ad-slot--leaderboard { display: none; } /* replaced by .mobile-top-ads above */
+  /* Sized for desktop's tall 747px hero — on mobile's much shorter hero its
+     28px blur bleeds upward and washes out the left/right artwork. */
+  .hero__fade { display: none; }
+  .hero__text { margin-top: 28px; }
+  .hero__title { font-size: 32px; }
+  .hero__subtitle { font-size: 16px; }
+  .hero__asset--left { width: 130px; top: 150px; left: -15px; }
+  .hero__asset--right { width: 90px; top: 180px; right: -15px; }
   .rolls { margin-top: -48px; }
   .video-featured { flex-direction: column; }
   .video-featured__thumb { height: 180px; }
   .video-featured__body { padding: 16px; }
   .video-ads__sidebar { flex-direction: column; }
   .footer__kanal-grid { flex-direction: column; gap: 8px; }
-  .navbar__actions { gap: 10px; }
   .btn--subscribe { display: none; }
+
+  /* ---- Mobile navbar (Figma node 17:10640 "Header - Mobile") ----
+     Single 50px-tall row: logo + 4 icon buttons. Search input, the
+     subscribe button, the account icon and the desktop nav-link row are
+     all dropped in favor of one combo menu+search button that reveals
+     them again in a dropdown — reusing the exact same markup/links
+     rather than inventing mobile-only content. */
+  .navbar__utility-inner {
+    flex-wrap: nowrap;
+    align-items: center;
+    min-height: 50px; /* not fixed height — must grow when the search row wraps in below */
+    padding: 0 8px 0 16px;
+    gap: 39px;
+  }
+  .navbar__logo img { width: 122px; height: 24px; }
+
+  .navbar__search { display: none; order: unset; max-width: none; }
+  .navbar__account { display: none; }
+  .navbar__menu { display: none; }
+
+  .navbar__actions { gap: 0; }
+  .navbar__actions .icon-btn { padding: 10px; }
+  .navbar__menu-search { display: flex; }
+  /* The 50px-tall mobile row leaves less headroom than desktop's 64px —
+     pull the badge in slightly so it doesn't get clipped by the viewport top. */
+  .badge-new { top: -2px; right: -8px; }
+
+  /* Toggled by JS: reveals the real search form + the real nav-link list
+     (same elements the desktop layout uses) as a dropdown panel. */
+  .navbar.navbar--mobile-menu-open .navbar__utility-inner { flex-wrap: wrap; }
+  .navbar.navbar--mobile-menu-open .navbar__search {
+    display: flex;
+    order: 10;
+    flex: 1 1 100%;
+    max-width: none;
+    margin-top: 12px;
+  }
+  .navbar.navbar--mobile-menu-open .navbar__menu { display: block; }
+  .navbar.navbar--mobile-menu-open .navbar__menu-inner {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: 8px 0 16px;
+    overflow: visible;
+  }
+  .navbar.navbar--mobile-menu-open .navbar__menu-list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .navbar.navbar--mobile-menu-open .navbar__menu-list a {
+    display: block;
+    padding: 12px 16px;
+    border-bottom: 1px solid #262626;
+  }
+  .navbar.navbar--mobile-menu-open .navbar__menu .icon-btn--sm { display: none; }
 }

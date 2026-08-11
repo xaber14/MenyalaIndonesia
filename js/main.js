@@ -87,4 +87,33 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(updateNavbar);
     });
   }
+
+  // ---- Mobile combo menu+search button ----
+  // Toggles the same search form and nav-link list the desktop layout
+  // uses (just re-styled as a dropdown by CSS) — no separate mobile menu
+  // content to keep in sync.
+  const menuSearchBtn = document.querySelector('.navbar__menu-search');
+  if (navbar && menuSearchBtn) {
+    const closeMobileMenu = () => {
+      navbar.classList.remove('navbar--mobile-menu-open');
+      menuSearchBtn.setAttribute('aria-expanded', 'false');
+    };
+
+    menuSearchBtn.addEventListener('click', () => {
+      const isOpen = navbar.classList.toggle('navbar--mobile-menu-open');
+      menuSearchBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.querySelectorAll('.navbar__menu-list a').forEach((link) => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!navbar.contains(event.target)) closeMobileMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMobileMenu();
+    });
+  }
 });

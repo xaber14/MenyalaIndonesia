@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libertinus+Serif:wght@400;700&family=Playfair+Display:ital,wght@1,700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=32" />
+<link rel="stylesheet" href="css/style.css?v=47" />
 </head>
 <body>
 
@@ -32,6 +32,7 @@
   <symbol id="icon-cert" viewBox="0 0 24 24"><circle cx="12" cy="9.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 14.7L7 21l5-2.5 5 2.5-1.5-6.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
   <!-- Mobile-only combo icon: menu (list bars) + search glass overlaid, per Figma mobile navbar -->
   <symbol id="icon-menu-search" viewBox="0 0 26 21"><rect x="0" y="0" width="22" height="2" rx="1" fill="currentColor"/><rect x="0" y="9" width="11" height="2" rx="1" fill="currentColor"/><rect x="0" y="18" width="11" height="2" rx="1" fill="currentColor"/><circle cx="17.5" cy="12.5" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="20.3" y1="15.3" x2="23" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 14 14"><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></g></symbol>
 </svg>
 
 <!-- ============ NAVBAR ============ -->
@@ -60,7 +61,6 @@
         </button>
         <button class="icon-btn icon-btn--font" aria-label="Ukuran huruf">
           <img src="assets/icons/font-size.png" width="24" height="24" alt="" />
-          <span class="badge-new">Baru</span>
         </button>
         <button class="icon-btn navbar__account" aria-label="Akun saya">
           <img src="assets/icons/user-circle.png" width="24" height="24" alt="" />
@@ -107,7 +107,6 @@
 <div class="mobile-top-ads">
   <div class="container mobile-top-ads__inner">
     <img class="mobile-top-ads__image" src="assets/img/ads/hero-leaderboard.jpg" alt="Iklan: Optik Seis, diskon hingga 30%" loading="lazy" />
-    <p class="mobile-top-ads__caption">Baca berita tanpa iklan. <a href="#">Gabung Kompas.com+</a></p>
   </div>
 </div>
 
@@ -301,6 +300,17 @@
           </button>
         </div>
 
+        <!-- Mobile-only: Tower Ads between Video and Podcast (Figma node
+             88:8449) — replaces the plain separator that used to mark this
+             boundary (hidden on mobile now, see .podcast__separator--top). -->
+        <div class="native-ad native-ad--300x600">
+          <p class="native-ad__label">Iklan — Scroll ke bawah untuk melanjutkan</p>
+          <div class="native-ad__body">
+            <div class="native-ad__image placeholder-block"></div>
+          </div>
+          <p class="ad-slot__caption">Baca berita tanpa iklan. <a href="#">Gabung Kompas.com+</a></p>
+        </div>
+
         <!-- ============ PODCAST (Figma node 63:5946) ============ -->
         <div class="podcast">
           <div class="podcast__separator podcast__separator--top"></div>
@@ -348,7 +358,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Selain Gibran, Ini 21 Kepala Daerah Berusia di Bawah 40 Tahun yang Bisa Jadi Capres</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Nasional</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -358,7 +368,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Syukuran Putusan MK, Relawan Gibran Salatiga Berangkat ke Semarang</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Regional</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -368,17 +378,28 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">27 Hektar Lahan di Hutan Lindung Egon Ilinmedo Sikka Terbakar</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Lestari</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
         </a>
+
+        <!-- Mobile-only: Ads Sisipan between Terkini Lainnya items (Figma
+             node 88:8375). -->
+        <div class="native-ad native-ad--300x250">
+          <p class="native-ad__label">Iklan — Scroll ke bawah untuk melanjutkan</p>
+          <div class="native-ad__body">
+            <div class="native-ad__image placeholder-block"></div>
+          </div>
+          <p class="ad-slot__caption">Baca berita tanpa iklan. <a href="#">Gabung Kompas.com+</a></p>
+        </div>
+
         <a class="terkini-item" href="#">
           <img class="terkini-item__thumb" src="assets/img/terkini/terkini-4-rice-cooker.jpg" alt="Rice cooker di atas meja dapur" loading="lazy" />
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Pemprov Banten Data Warga Calon Penerima "Rice Cooker" Gratis</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Regional</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -388,7 +409,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Anak Gajah Terjebak di Sumur Jambi, Evakuasi Ditunggu Kawanannya</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Lestari</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -398,7 +419,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Selain Gibran, Ini 21 Kepala Daerah Berusia di Bawah 40 Tahun yang Bisa Jadi Capres</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Nasional</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -408,7 +429,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Syukuran Putusan MK, Relawan Gibran Salatiga Berangkat ke Semarang</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Regional</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -418,7 +439,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">27 Hektar Lahan di Hutan Lindung Egon Ilinmedo Sikka Terbakar</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Lestari</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -428,7 +449,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Pemprov Banten Data Warga Calon Penerima "Rice Cooker" Gratis</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Regional</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -438,7 +459,7 @@
           <div class="terkini-item__body">
             <h3 class="terkini-item__title">Anak Gajah Terjebak di Sumur Jambi, Evakuasi Ditunggu Kawanannya</h3>
             <div class="meta meta--terkini">
-              <p class="terkini-item__kanal">NAMA KANAL</p>
+              <p class="terkini-item__kanal">Lestari</p>
               <p class="terkini-item__date">24 September 2023</p>
             </div>
           </div>
@@ -586,6 +607,34 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=4"></script>
+<!-- ============ FLOATING ADS (Figma node 77:3619) — desktop/tablet ============
+     Sticks to the bottom of the viewport above all content; the close
+     button dismisses it for the rest of the session. -->
+<div class="floating-ads" id="floatingAds">
+  <div class="floating-ads__inner">
+    <button class="floating-ads__close" aria-label="Tutup iklan" aria-controls="floatingAds">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-close"/></svg>
+    </button>
+    <a class="floating-ads__link" href="#">
+      <img class="floating-ads__image" src="assets/img/ads/floating-banner.jpg" alt="Iklan Bank Indonesia: BI-Rate tetap 4,75%" />
+    </a>
+  </div>
+</div>
+
+<!-- ============ FLOATING ADS — mobile only ============
+     Different asset/aspect (320x150) than the desktop banner above; the two
+     swap visibility via CSS at the mobile breakpoint (see .floating-ads--mobile). -->
+<div class="floating-ads floating-ads--mobile" id="floatingAdsMobile">
+  <div class="floating-ads__inner">
+    <button class="floating-ads__close" aria-label="Tutup iklan" aria-controls="floatingAdsMobile">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-close"/></svg>
+    </button>
+    <a class="floating-ads__link" href="#">
+      <img class="floating-ads__image" src="assets/img/ads/floating-banner-mobile.png" alt="Iklan" />
+    </a>
+  </div>
+</div>
+
+<script src="js/main.js?v=6"></script>
 </body>
 </html>

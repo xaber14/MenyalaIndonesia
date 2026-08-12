@@ -52,6 +52,7 @@ img, svg { display: block; }
   --error-red: #d92d20;
 
   /* Hero */
+  --hero-bg: #f1e7d2;           /* cream banner background */
   --hero-heading: #b4470f;      /* rust heading (Figma uses a paper-texture fill) */
   --hero-heading-light: #be5015;
   --hero-heading-dark: #a63d06;
@@ -216,18 +217,6 @@ body {
    default so it never appears at tablet/desktop widths. */
 .navbar__menu-search { display: none; }
 
-.badge-new {
-  position: absolute;
-  top: -10px;
-  right: -14px;
-  background: var(--error-red);
-  color: var(--white);
-  font-size: 8px;
-  letter-spacing: -0.16px;
-  border-radius: 999px;
-  padding: 1px 4px;
-  line-height: 1.3;
-}
 
 .navbar__menu {
   background: var(--black);
@@ -268,18 +257,21 @@ body {
   isolation: isolate;
   padding-top: 24px;
   padding-bottom: 197px;
-  background-color: #f4ecdf; /* average tone of the artwork, shows while loading */
-  background-image: url("../assets/img/hero-bg.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: cover; /* stays full-bleed as the viewport widens */
+  background-color: var(--hero-bg); /* flat cream — the paper-texture image was dropped */
 }
 
-/* Decorative artwork pinned to the viewport edges. Widths are expressed as a
-   share of the viewport (496/1440 and 415/1440) so they grow with the screen,
-   capped at their native size so they never upscale past the artwork.
-   Figma (node 28:29105): left asset anchors from the TOP-left (x:0, y:0);
-   right asset anchors from the right edge, offset 150px from the top. */
+/* Decorative artwork pinned to the viewport edges. Sizes come from Figma's
+   1440x748 hero (node 74:9232): left asset 538px wide, right asset 449px
+   wide, both sitting flush against the hero's bottom edge. Widths scale with
+   the viewport (538/1440 and 449/1440) and cap at the design size so they
+   never upscale past it.
+   Both anchor from bottom:0. Figma pins the left one from the TOP (y:149) in
+   a frame that overflows the hero, but at 1440px these assets' own aspect
+   ratios land its bottom on exactly the hero's bottom edge — so bottom-
+   anchoring reproduces the design there and, unlike top-anchoring, keeps
+   them flush at every other width instead of leaving a strip of bare cream
+   underneath. Sitting flush at the bottom is what puts their lower reach
+   inside .hero__fade below, which paints over them. */
 .hero__asset {
   position: absolute;
   z-index: 0;
@@ -289,14 +281,14 @@ body {
 }
 .hero__asset--left {
   left: 0;
-  top: 0;
-  width: clamp(170px, 34.44vw, 496px);
+  bottom: 0;
+  width: clamp(170px, 37.36vw, 538px);
   animation: heroSlideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) 1s both;
 }
 .hero__asset--right {
   right: 0;
-  top: 150px;
-  width: clamp(100px, 28.82vw, 415px);
+  bottom: 0;
+  width: clamp(100px, 31.18vw, 449px);
   animation: heroSlideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) 1s both;
 }
 
@@ -326,21 +318,45 @@ body {
   }
 }
 
-/* Wide blurred white ellipse that lightens the bottom edge of the hero.
-   Approximates the blurred ellipse in Figma (original SVG not downloadable). */
+/* Wide blurred white ellipse that fades the bottom of the hero into the
+   white page below it (Figma: Ellipse 4, node 88:8458 — an Ellipse + layer
+   blur). Fully opaque so the hero's bottom edge lands on pure white and
+   meets the next section seamlessly; the blur is what keeps the transition
+   soft rather than a visible arc.
+   Sits at z-index 1 — above .hero__asset (0) and below .hero__inner (2) —
+   which is exactly Figma's layer order: both side assets, then the ellipse
+   over them, then the ad slot and headline. That stacking is what makes the
+   artwork sink into the white at the bottom of the hero.
+   The values here are the tablet/mobile fallback; desktop matches Figma
+   exactly in the override below. */
 .hero__fade {
   position: absolute;
   z-index: 1;
   left: 50%;
-  top: 88%;
+  top: 76%;
   width: 200%;
   height: 682px;
   transform: translateX(-50%);
   background: var(--white);
   border-radius: 50%;
-  filter: blur(28px);
-  opacity: 0.75;
+  filter: blur(48px);
   pointer-events: none;
+}
+
+/* Desktop reproduces Figma's ellipse 1:1 — 2885x762 at x:-707, y:542 within
+   the 1440x748 hero, i.e. 200.35% of the hero's width, 762px tall, centre
+   nudged 15.5px right of the hero's own centre. At that size the arc is flat
+   enough across the middle to stay clear of the headline while still dipping
+   low enough out at left:0/right:0 to wash over the side art.
+   Tablet keeps the smaller base values instead: its hero is ~110px shorter,
+   and this ellipse there rides up far enough to bury the subtitle in white. */
+@media (min-width: 901px) {
+  .hero__fade {
+    left: calc(50% + 15.5px);
+    top: 72.46%;
+    width: 200.35%;
+    height: 762px;
+  }
 }
 
 .hero__inner {
@@ -706,7 +722,8 @@ body {
 /* Lives inside .video-ads__main (left column) so it's the same 740px width
    as the Video block above it, and stacks below it — not below the taller
    right ads column. */
-.terkini { padding-top: 24px; padding-bottom: 40px; }
+/* padding-bottom + .video-ads' own 40px = the 120px gap to the footer. */
+.terkini { padding-top: 24px; padding-bottom: 80px; }
 
 /* Mobile-only — sits between Article and Video (see index.html). Desktop
    gets the equivalent break via .video-ads__main's border-top instead. */
@@ -774,8 +791,91 @@ body {
   letter-spacing: -0.24px;
   color: #878b92;
 }
-.terkini-item__kanal { font-weight: 600; text-transform: uppercase; }
+.terkini-item__kanal { font-weight: 600; }
 .terkini-item__date { font-weight: 400; }
+
+/* ==========================================================================
+   NATIVE AD SLOT — mobile only (Figma: Tower Ads node 88:8449 sits between
+   Video and Podcast; Ads Sisipan node 88:8375 sits inside Terkini Lainnya).
+   Both share the same "Iklan — Scroll ke bawah..." label + creative +
+   "Baca berita tanpa iklan" caption shape, just at different creative
+   heights, so they reuse one component with a size modifier.
+   Hidden by default; shown + made full-bleed only in the mobile block below.
+   ========================================================================== */
+.native-ad { display: none; }
+.native-ad__label {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  padding: 8px 0;
+}
+.native-ad__body {
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+.native-ad__image { width: 300px; max-width: 100%; }
+.native-ad--300x600 .native-ad__image { height: 600px; }
+.native-ad--300x250 .native-ad__image { height: 250px; }
+
+/* ==========================================================================
+   FLOATING ADS (Figma node 77:3619)
+   Pinned to the bottom of the viewport, above everything else. Dismissed
+   by the close button (see main.js) — .is-dismissed removes it from layout
+   entirely rather than just hiding it visually.
+   ========================================================================== */
+.floating-ads {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200; /* above the sticky navbar (100) */
+  display: flex;
+  justify-content: center;
+  padding: 0 20px 12px;
+  pointer-events: none; /* let clicks through the empty gutters */
+}
+.floating-ads.is-dismissed { display: none; }
+
+.floating-ads__inner {
+  position: relative;
+  width: 100%;
+  max-width: 440px; /* matches the banner asset's native size (was 1100px — way oversized) */
+  pointer-events: auto; /* but the banner itself stays clickable */
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+.floating-ads__link { display: block; }
+.floating-ads__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.floating-ads__close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--neutral-lighter);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+}
+.floating-ads__close:hover { background: var(--bg-elevation-1); }
+
+/* Mobile gets its own banner (different asset/aspect — 320x150), shown in
+   place of the desktop one below. Hidden by default so it never doubles up
+   with the desktop banner above the mobile breakpoint. */
+.floating-ads--mobile { display: none; }
 
 /* ==========================================================================
    FOOTER
@@ -886,6 +986,19 @@ body {
   .navbar__utility-inner { flex-wrap: wrap; gap: 16px; height: auto; padding: 12px 20px; }
   .navbar__search { order: 3; max-width: 100%; }
   .hero { padding-bottom: 150px; }
+  /* Tablet: the ad slot's height is fixed (250px), so on a narrower/shorter
+     hero it eats a much bigger share of the space before the headline than
+     it does on desktop — while the side art was still sized/positioned for
+     desktop's taller hero. That mismatch let the headline collide with the
+     right-hand asset. Shrink and drop both a bit lower to clear the text. */
+  /* bottom:auto cancels the desktop rules' bottom:0 — these place the art
+     from the top instead, and leaving both set over-constrains it. */
+  .hero__asset--left { width: 160px; top: 0; bottom: auto; }
+  .hero__asset--right { width: 120px; top: 40px; bottom: auto; }
+  /* Same reason as the mobile block below: the container fills nearly the
+     whole viewport here, so arrows poking 16px outside it overflow the page. */
+  .carousel-nav--next { right: 4px; }
+  .carousel-nav--prev { left: 4px; }
   .rolls { margin-top: -80px; }
   .headline-card { flex-direction: column; }
   .headline-card__image { height: 220px; }
@@ -897,7 +1010,13 @@ body {
 }
 
 @media (max-width: 640px) {
-  .terkini-item__thumb { flex: 0 0 120px; width: 120px; height: 84px; }
+  /* The 120px footer gap is a desktop spec — keep mobile tighter. */
+  /* The 2 sidebar ad slots are hidden on mobile (see .video-ads__sidebar
+     below), so this is the only bottom padding left before the footer —
+     set directly to the requested 100px rather than stacking with
+     .video-ads' own padding-bottom (zeroed out below too). */
+  .terkini { padding-bottom: 100px; }
+  .terkini-item__thumb { flex: 0 0 100px; width: 100px; height: 100px; } /* per request — 100x100px */
   .terkini-item__title { font-size: 16px; }
   /* Divider between cards (Figma node 17:10594) — tighten the list gap to
      16px and let each card's own bottom padding+border make up the other
@@ -936,15 +1055,9 @@ body {
   .headline-card__image { height: 185px; border-radius: 8px; }
   .headline-card__body { background: none; padding: 8px 0 0; }
   .headline-card__title { font-size: 16px; letter-spacing: -0.32px; }
-  /* Figma uses a short vertical line between "News" and the timestamp here,
-     not the dot used elsewhere on the site. */
-  .headline-card .dot, .article-card .dot {
-    width: 1px;
-    height: 12px;
-    border-radius: 0;
-    background: var(--text-secondary);
-    opacity: 1;
-  }
+  /* Figma shows a short vertical line between "News" and the timestamp
+     here, but per request this uses the same round dot as the rest of the
+     site (the base .dot rule) instead — no override needed. */
 
   /* Grid → vertical list: thumb (100x100) beside title+meta, rows divided
      by hairlines instead of the desktop's row/column gaps. */
@@ -969,6 +1082,10 @@ body {
      swipe-to-scroll strip instead of desktop's evenly-filled 4-up grid. */
   .video-ads__main { border-top: none; padding-top: 0; }
   .section-heading { padding-top: 24px; }
+  /* The chevron was a "see all" CTA — redundant now that the content below
+     is already a scrollable slider, per request. Only Video and Podcast
+     use .section-heading, both slider sections. */
+  .section-heading svg { display: none; }
 
   .video-featured { border-radius: 8px; }
   .video-featured__thumb { height: 184px; }
@@ -990,20 +1107,35 @@ body {
     letter-spacing: -0.2px;
   }
 
-  /* Also closes off the Video block the same way Article's section does. */
+  /* Bottom border removed per request — Tower Ads now sits right below this
+     block (see .native-ad--300x600), so the hairline read as a redundant
+     extra divider on top of it. */
   .video-grid-wrap {
     padding-top: 16px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--neutral-lighter);
   }
-  /* Desktop's prev/next buttons become unnecessary — the row scrolls by
-     swipe like .rolls__track does. */
-  .video-grid-wrap .carousel-nav { display: none; }
+  /* ---- Slider edge insets (shared pattern: .video-grid, .podcast-grid,
+     .rolls__track) ----
+     The track itself goes full-bleed (breaking out of .container's 20px
+     padding), then re-adds that 20px as its OWN padding. Because padding on
+     a scroll container is part of the scrollable area rather than a fixed
+     frame around it, this gives the behaviour you see on most sites:
+       - at rest the first card sits 20px in, aligned with every other
+         section's left edge;
+       - scrolling right carries that left padding away with the content, so
+         cards run right up to the screen edge instead of against a gutter;
+       - at the far end the right padding is still there, so the last card
+         never ends up flush against the screen edge.
+     Setting the inset with margin/width alone can't do this — a fixed
+     gutter doesn't scroll. */
   .video-grid {
     overflow-x: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    padding-bottom: 2px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 0 20px 2px;
   }
   .video-grid::-webkit-scrollbar { display: none; }
   .video-card { flex: 0 0 150px; width: 150px; } /* fixed size, per request */
@@ -1015,17 +1147,36 @@ body {
   }
   .video-card .dot { display: none; }
 
+  /* ---- Native ad slots (Tower Ads / Ads Sisipan) ----
+     Full-bleed: unlike the sliders above these are static, so they break out
+     of .container's padding outright with no inset added back.
+     .native-ad--300x600 (Tower Ads) sits between Video and Podcast,
+     replacing the plain separator that used to mark that boundary (hidden
+     below, .podcast__separator--top). .native-ad--300x250 (Ads Sisipan)
+     sits inside Terkini Lainnya's list and relies on that list's own
+     16px gap for spacing instead of its own margin. */
+  .native-ad {
+    display: block;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .native-ad--300x600 { margin-top: 24px; }
+
   /* ---- Podcast ----
      Same treatment as Video: fixed-width cards, swipe-to-scroll instead of
      desktop's evenly-filled row + prev/next buttons. */
   .podcast { padding-top: 0; }
   .podcast .section-heading { margin-top: 16px; }
-  .podcast-grid-wrap .carousel-nav { display: none; }
+  /* Same scroll-padding pattern as .video-grid above. */
   .podcast-grid {
     overflow-x: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    padding-bottom: 2px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 0 20px 2px;
   }
   .podcast-grid::-webkit-scrollbar { display: none; }
   .podcast-card { flex: 0 0 140px; width: 140px; } /* fixed size, per request */
@@ -1037,7 +1188,10 @@ body {
   }
   .podcast-card .dot { display: none; }
   .podcast__separator { margin-top: 16px; }
-  .podcast__separator--top { margin-top: 0; }
+  /* Tower Ads now sits between Video and Podcast instead (see .native-ad
+     above) — the plain separator that used to mark that boundary is
+     redundant here. */
+  .podcast__separator--top { display: none; }
   /* The separator after Podcast breaks out of .container's 20px side
      padding to run edge-to-edge, unlike the one above Podcast. */
   .podcast__separator:not(.podcast__separator--top) {
@@ -1046,54 +1200,114 @@ body {
     margin-right: -20px;
   }
 
-  /* On desktop these floating round buttons poke 16px outside the card
-     row on purpose (ample page margin absorbs it). On mobile the page
-     margin IS 20px total, so poking out was causing page-wide horizontal
-     scroll — pull them back to just inside the edge instead. */
-  .carousel-nav--next { right: 4px; }
-  .carousel-nav--prev { left: 4px; }
+  /* Every slider here (Rolls, Video, Podcast) is swipe-only on mobile, so the
+     prev/next carets go away entirely — one rule instead of the per-section
+     ones this replaces. Also removes the reason they used to need repositioning:
+     on desktop they poke 16px outside the row, which on mobile (20px total page
+     margin) was causing page-wide horizontal scroll. */
+  .carousel-nav { display: none; }
 
   /* ---- Mobile top ad strip (Figma node 17:10187) ----
      Flush below the navbar with a flat #F7F7F7 background — swaps in for
      the desktop ad slot that normally lives inside the hero. */
   .mobile-top-ads { display: block; background: var(--bg-elevation-1); }
-  .mobile-top-ads__inner { display: flex; flex-direction: column; align-items: center; padding-top: 0; padding-bottom: 0; }
+  /* Figma (node 17:10187) keeps a blank 50px-tall strip below the creative
+     even with no caption text in it — padding-bottom reproduces that empty
+     space instead of collapsing to the image's own height. */
+  .mobile-top-ads__inner { display: flex; flex-direction: column; align-items: center; padding-top: 0; padding-bottom: 50px; }
   .mobile-top-ads__image { width: 100%; height: 100px; object-fit: cover; background: #e8e8e8; display: block; }
-  .mobile-top-ads__caption {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    height: 50px;
-    font-size: 12px;
-    letter-spacing: -0.12px;
-    font-weight: 600;
-    color: #666;
-    white-space: nowrap;
-  }
-  .mobile-top-ads__caption a { color: var(--blue-link); font-weight: 700; }
 
-  /* Figma mobile hero: 360px tall. Taller than a bare text-fit box so the
-     headline/subtitle can stay near the top, clearly readable, while the
-     left/right artwork sits lower rather than crowding the text. */
-  .hero { padding-top: 0; padding-bottom: 110px; min-height: 352px; }
+  /* ---- Floating ads: swap desktop banner for the mobile-specific one ---- */
+  .floating-ads:not(.floating-ads--mobile) { display: none; }
+  .floating-ads--mobile { display: flex; }
+  .floating-ads--mobile .floating-ads__inner { max-width: 320px; }
+
+  /* ---- Mobile hero (Figma node 93:9903 → hero frame 93:9927) ----
+     A 360x340 frame; every number below is measured straight off it.
+     min-height rather than a fixed height so the box grows instead of
+     clipping if the copy ever wraps to more lines than the design assumes
+     (content only reaches ~119px, so it resolves to 340px as designed). */
+  .hero { padding-top: 0; padding-bottom: 0; min-height: 340px; }
   .hero .ad-slot--leaderboard { display: none; } /* replaced by .mobile-top-ads above */
-  /* Sized for desktop's tall 747px hero — on mobile's much shorter hero its
-     28px blur bleeds upward and washes out the left/right artwork. */
-  .hero__fade { display: none; }
-  .hero__text { margin-top: 90px; }
-  .hero__title { font-size: 32px; }
-  .hero__subtitle { font-size: 16px; }
-  .hero__asset--left { width: 130px; top: 150px; left: -15px; }
-  .hero__asset--right { width: 90px; top: 180px; right: -15px; }
-  .rolls { margin-top: -48px; padding-bottom: 0; }
+  /* Figma keeps the ellipse on mobile too, just far shallower than desktop's:
+     2885x231 at y=138, centred on the hero, same 48px blur. Width as a
+     percentage (2885/360) so the arc keeps its curvature relative to the
+     hero at any viewport. Its arc tops out ~19px below the subtitle and
+     ~100px above the side art's base, so it washes the artwork into white
+     without reaching the text. */
+  .hero__fade {
+    display: block;
+    left: 50%;
+    top: 138px;
+    width: 801.4%;
+    height: 231px;
+  }
+  .hero__text { margin-top: 38px; max-width: 312px; }
+  .hero__title { font-size: 24px; }
+  .hero__subtitle {
+    margin-top: 8px; /* Figma: 7.94px */
+    font-size: 12px;
+    max-width: 238px; /* Figma wraps the copy narrower than the 312px block */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Side art: Figma's frames are 168x209 (left) and 151x169 (right), both
+     anchored to the hero's bottom edge — 98px and 111px up from it. Explicit
+     height + object-fit:cover reproduces those footprints: Figma crops a
+     single wide source image into each frame, and our two pre-cropped files
+     don't share the frames' exact aspect ratios. object-position mirrors
+     Figma's anchoring (left frame anchored left, right frame right), so each
+     keeps the side of the artwork that faces the screen edge. */
+  .hero__asset--left {
+    left: 0;
+    top: auto;
+    bottom: 98px;
+    width: 168px;
+    height: 209px;
+    object-fit: cover;
+    object-position: left center;
+  }
+  .hero__asset--right {
+    right: 0;
+    top: auto;
+    bottom: 111px;
+    width: 151px;
+    height: 169px;
+    object-fit: cover;
+    object-position: right center;
+  }
+  /* Rolls ride up over the hero by the card height minus the 58px that shows
+     below it — Figma puts the cards at y=-166 inside a 58px-tall frame. */
+  .rolls { margin-top: -166px; padding-bottom: 0; }
+  .roll-card { flex: 0 0 126px; width: 126px; height: 224px; }
+  /* Same scroll-padding pattern as .video-grid above — Rolls previously ran
+     edge-to-edge with no left inset at all. No padding-bottom here: the
+     scrollbar is hidden, and the cards must end exactly on the section's
+     bottom edge for the 58px overhang above to come out right. */
+  .rolls__track {
+    gap: 10px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 0 20px;
+  }
+  /* Figma stacks a second, much stronger gradient under the title (on top of
+     .roll-card__overlay) so 12px white text stays legible over any
+     thumbnail. Its 80px height falls out of the 3 clamped lines + padding. */
+  .roll-card__title {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 45%, #000 90%);
+  }
   .section-divider--thick { display: block; height: 8px; background: var(--bg-elevation-2); }
   /* .video-featured / __thumb / __body are already styled in the Video
      block above this one — this used to have its own duplicate/conflicting
      copy here that silently won the cascade (later = wins at equal
      specificity), which is why the featured card had collapsed to 0
      height. Removed. */
-  .video-ads__sidebar { flex-direction: column; }
+  /* Removed per request — the 2 sidebar ad slots (300x250 + 300x600) that
+     sat right before the footer on mobile. .terkini's own 100px
+     padding-bottom (above) is now the only gap left before the footer. */
+  .video-ads__sidebar { display: none; }
+  .video-ads { padding-bottom: 0; }
   .footer__kanal-grid { flex-direction: column; gap: 8px; }
   .btn--subscribe { display: none; }
 
@@ -1119,9 +1333,6 @@ body {
   .navbar__actions { gap: 0; }
   .navbar__actions .icon-btn { padding: 10px; }
   .navbar__menu-search { display: flex; }
-  /* The 50px-tall mobile row leaves less headroom than desktop's 64px —
-     pull the badge in slightly so it doesn't get clipped by the viewport top. */
-  .badge-new { top: -2px; right: -8px; }
 
   /* Toggled by JS: reveals the real search form + the real nav-link list
      (same elements the desktop layout uses) as a dropdown panel. */

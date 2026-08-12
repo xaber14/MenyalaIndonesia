@@ -116,4 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (event.key === 'Escape') closeMobileMenu();
     });
   }
+
+  // ---- Floating bottom ad(s) ----
+  // Each close button dismisses its own banner for the rest of the page
+  // view. Generic over every .floating-ads block (desktop + mobile
+  // variants) so adding another one later needs no JS changes.
+  document.querySelectorAll('.floating-ads').forEach((floatingAds) => {
+    const closeBtn = floatingAds.querySelector('.floating-ads__close');
+    if (!closeBtn) return;
+    closeBtn.addEventListener('click', () => {
+      floatingAds.classList.add('is-dismissed');
+    });
+  });
 });
